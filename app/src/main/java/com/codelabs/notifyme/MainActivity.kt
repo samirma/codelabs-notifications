@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.Builder
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getNotificationBuilder(): Builder {
         return Builder(this, PRIMARY_CHANNEL_ID)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setContentTitle("You've been notified!")
             .setContentText("This is your notification text.")
             .setSmallIcon(R.drawable.ic_android)
