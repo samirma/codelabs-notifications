@@ -1,3 +1,3 @@
 # codelabs-notifications
 
-https://codelabs.developers.google.com/codelabs/android-training-notifications/index.html#2
+https://codelabs.developers.google.com/codelabs/android-training-notifications/index.html

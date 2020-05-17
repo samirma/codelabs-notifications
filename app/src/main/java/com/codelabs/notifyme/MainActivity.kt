@@ -29,10 +29,25 @@ class MainActivity : AppCompatActivity() {
             sendNotification()
         }
 
+        update.setOnClickListener {
+            updateNotification()
+        }
+
+        cancel.setOnClickListener {
+            cancelNotification()
+        }
 
         createNotificationChannel()
 
         getNotificationBuilder()
+
+    }
+
+    private fun cancelNotification() {
+        mNotifyManager?.cancel(NOTIFICATION_ID);
+    }
+
+    private fun updateNotification() {
 
     }
 
