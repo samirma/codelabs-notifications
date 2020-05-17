@@ -3,6 +3,7 @@ package com.codelabs.notifyme
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -41,13 +42,30 @@ class MainActivity : AppCompatActivity() {
 
         getNotificationBuilder()
 
+        setNotificationButtonState(true, false, false)
+
     }
 
     private fun cancelNotification() {
-        mNotifyManager?.cancel(NOTIFICATION_ID);
+        mNotifyManager?.cancel(NOTIFICATION_ID)
+        setNotificationButtonState(true, false, false)
     }
 
     private fun updateNotification() {
+        val androidImage = BitmapFactory
+            .decodeResource(resources, R.drawable.mascot_1)
+
+        val notifyBuilder = getNotificationBuilder()
+
+        notifyBuilder.setStyle(
+            NotificationCompat.BigPictureStyle()
+                .bigPicture(androidImage)
+                .setBigContentTitle("Notification Updated!")
+        )
+
+        mNotifyManager?.notify(NOTIFICATION_ID, notifyBuilder.build())
+
+        setNotificationButtonState(false, true, true)
 
     }
 
@@ -60,10 +78,11 @@ class MainActivity : AppCompatActivity() {
             .setSmallIcon(R.drawable.ic_android)
     }
 
-    fun sendNotification() {
+    private fun sendNotification() {
 
         val notifyBuilder: Builder = getNotificationBuilder()
-        mNotifyManager!!.notify(NOTIFICATION_ID, notifyBuilder.build())
+        mNotifyManager?.notify(NOTIFICATION_ID, notifyBuilder.build())
+        setNotificationButtonState(false, true, true)
 
     }
 
@@ -76,12 +95,22 @@ class MainActivity : AppCompatActivity() {
                 PRIMARY_CHANNEL_ID,
                 "Mascot Notification", NotificationManager.IMPORTANCE_HIGH
             )
-            notificationChannel.enableLights(true);
-            notificationChannel.lightColor = Color.RED;
-            notificationChannel.enableVibration(true);
-            notificationChannel.description = "Notification from Mascot";
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = "Notification from Mascot"
             mNotifyManager?.createNotificationChannel(notificationChannel)
         }
+    }
+
+    private fun setNotificationButtonState(
+        isNotifyEnabled: Boolean,
+        isUpdateEnabled: Boolean,
+        isCancelEnabled: Boolean
+    ) {
+        notify.isEnabled = isNotifyEnabled
+        update.isEnabled = isUpdateEnabled
+        cancel.isEnabled = isCancelEnabled
     }
 
 }
